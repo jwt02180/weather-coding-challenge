@@ -6,8 +6,8 @@ import theme from '@/app/theme';
 
 export const metadata: Metadata = {
 	title: {
-		template: '5-Day Forecast',
-		default: 'Weather App'
+		template: '%s | 5-Day Forecast',
+		default: 'Weather App',
 	},
 	description: "A weather application coding challenge",
 	creator: 'Jameson Taylor',
