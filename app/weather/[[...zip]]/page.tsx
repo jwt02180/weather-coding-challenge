@@ -28,21 +28,21 @@ export default async function Page({ params }: PageProps) {
 	const zipCode = zip && zip[0];
 	
 	let zipName = '';
-    let validationMessage = 'Please enter a zip';
-    let forecastData: ForecastInfo[] = [];
-
-    if (zipCode) {
-      const { isValid, data: result, message } = await validateZip(zipCode);
-      if (message) {
-        validationMessage = message;
-      }
-
-      if (isValid && result) {
-        const { locationName, data } = await getForecast(result);
-        zipName = locationName;
-        forecastData = data;
-      }
-    }
+	let validationMessage = 'Please enter a zip';
+	let forecastData: ForecastInfo[] = [];
+	
+	if (zipCode) {
+		const { isValid, data: result, message } = await validateZip(zipCode);
+		if (message) {
+			validationMessage = message;
+		}
+		
+		if (isValid && result) {
+			const { locationName, data } = await getForecast(result);
+			zipName = locationName;
+			forecastData = data;
+		}
+	}
 	
 	return (
 		<Card variant="outlined">

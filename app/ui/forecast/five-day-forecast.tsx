@@ -78,7 +78,7 @@ function TabLabel({ date }: TabLabelProps) {
 	
 	return (
 		<>
-			<Typography variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
+			<Typography suppressHydrationWarning variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
 				{label}
 			</Typography>
 			<Typography

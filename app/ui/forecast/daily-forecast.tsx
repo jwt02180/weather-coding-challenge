@@ -44,7 +44,7 @@ function MainForecastDisplay({ data }: MainForecastDisplayProps) {
 	
 	return (
 		<Grid container spacing={2}>
-			<Grid display="flex" justifyContent="start" alignItems="center" size={3}>
+			<Grid suppressHydrationWarning display="flex" justifyContent="start" alignItems="center" size={3}>
 				{timeOfForecast}
 			</Grid>
 			<Grid display="flex" justifyContent="center" alignItems="center" size="grow">
