@@ -1,3 +1,4 @@
+import { getCoordinatesFromZip, getForecastByCoordinates } from '@/app/lib/weather-api';
 import { Card, CardContent, CardHeader } from '@mui/material';
 
 type PageProps = {
@@ -9,6 +10,14 @@ export default async function Page({ params }: PageProps) {
 	const zipCode = zip && zip[0];
 	
 	console.log(zipCode);
+
+	if (zipCode) {
+		const { lat, lon } = await getCoordinatesFromZip(zipCode);
+		console.log(lat, lon);
+
+		const result = await getForecastByCoordinates({ lat, lon });
+		console.log(result);
+	}
 	
 	return (
 		<Card variant="outlined">
