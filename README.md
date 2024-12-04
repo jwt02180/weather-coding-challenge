@@ -6,7 +6,7 @@ My name is [Jameson Taylor](https://www.linkedin.com/in/jameson-w-taylor/), and 
 ### Requirements
 I was tasked with creating a weather app that satisfied the following criteria:
 - Leverage [OpenWeatherAPI](https://openweathermap.org/api) to display a 5-day weather forecast in 3-hour increments for any specified US zip code.
-- The app should use SSR, which each page displaying the forecast data.
+- The app should use SSR, with each page displaying the forecast data.
 - The project should use the URL structure /weather/[zip] to fetch and display weather data for any US zip code.
 - Which framework I used was up to me to choose, but should includ Typescript.
 - The UI design should be immediately intuitive and easy to navigate.

@@ -68,6 +68,7 @@ type TabLabelProps = {
 	date: ForecastDate;
 };
 
+// https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
 function TabLabel({ date }: TabLabelProps) {
 	const { label, tempMin, tempMax, disabled } = date;
 	const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));

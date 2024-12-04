@@ -39,6 +39,7 @@ type MainForecastDisplayProps = {
 	data: LocalForecastInfo;
 };
 
+// https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
 function MainForecastDisplay({ data }: MainForecastDisplayProps) {
 	const { timeOfForecast, temperature, weatherConditions: { iconSrc, description, wind }} = data;
 	
