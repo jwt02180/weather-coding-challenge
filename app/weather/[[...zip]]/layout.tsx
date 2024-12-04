@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
+import ZipSearch from '@/app/ui/zip/search';
 
 type LayoutProps = {
 	params: Promise<{ zip?: string[] }>;
@@ -8,6 +9,7 @@ type LayoutProps = {
 
 export default async function Layout({ params, children}: LayoutProps) {
 	const { zip } = await params;
+	const zipCode = zip && zip[0];
 	
 	if (zip && zip.length > 1) {
 		// Thought it'd be nice to support _no_ zip in the URL, so this route is configured as an "optional catch-all"
@@ -23,7 +25,7 @@ export default async function Layout({ params, children}: LayoutProps) {
 					<Typography variant="h6">Weather App</Typography>
 				</Toolbar>
 				<Toolbar>
-					<div>Search input here</div>
+					<ZipSearch zip={zipCode} />
 				</Toolbar>
 			</AppBar>
 			<Container maxWidth="sm">

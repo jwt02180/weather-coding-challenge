@@ -24,7 +24,7 @@ export default function FiveDayForecastSkeleton() {
 						<Accordion key={hourly} defaultExpanded={idx === 0}>
 							<AccordionSummary
 								color='primary'
-								sx={{ minHeight: 60, '& .MuiAccordionSummary-content': { display: 'flex', alignItems: 'center', margin: 0 }}}
+								sx={{ minHeight: 59, '& .MuiAccordionSummary-content': { display: 'flex', alignItems: 'center', margin: 0 }}}
 								>
 								<Skeleton height={55} width="100%" />
 							</AccordionSummary>
