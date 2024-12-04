@@ -57,7 +57,9 @@ function Forecast({ data }: ForecastProps) {
 			)}
 			{forecast.map((day, idx) => (
 				<TabContent key={idx} isSelected={selectedTab === idx}>
-					<DailyForecast data={day} />
+					<div suppressHydrationWarning>
+						<DailyForecast data={day} />
+					</div>
 				</TabContent>
 			))}
 		</Box>
