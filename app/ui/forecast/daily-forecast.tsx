@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Grid2 as Grid, Typography } from '@mui/material';
-import { LocalForecastInfo, WindInfo } from '@/app/lib/app-definitions';
+import { ForecastInfo, WindInfo } from '@/app/lib/app-definitions';
 import ArrowCircleDown from '@mui/icons-material/ArrowCircleDownOutlined';
 
 type DailyForecastProps = {
-	data: LocalForecastInfo[];
+	data: ForecastInfo[];
 };
 
 export default function DailyForecast({ data }: DailyForecastProps) {
@@ -36,7 +36,7 @@ export default function DailyForecast({ data }: DailyForecastProps) {
 };
 
 type MainForecastDisplayProps = {
-	data: LocalForecastInfo;
+	data: ForecastInfo;
 };
 
 function MainForecastDisplay({ data }: MainForecastDisplayProps) {

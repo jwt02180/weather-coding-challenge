@@ -2,7 +2,7 @@ import 'server-only';
 
 import { ApiError, ZipGeocoderRequestParams, ZipGeocoderResponse, Coordinate, ForecastRequestParams, ForecastResponse, Language } from '@/app/lib/weather-definitions';
 import { GetForecastResult, ValidateZipCodeResult, ZipCode } from '@/app/lib/app-definitions';
-import { parseForecastData, parseZipCode, parseZipGeocoderResponse } from '@/app/lib/weather-util';
+import { parseAndGroupForecastData, parseZipCode, parseZipGeocoderResponse } from '@/app/lib/weather-util';
 
 export async function validateZip(zip: string): Promise<ValidateZipCodeResult> {
 	const { isValid, message } = parseZipCode(zip);
@@ -20,12 +20,15 @@ export async function validateZip(zip: string): Promise<ValidateZipCodeResult> {
 };
 
 export async function getForecast(verifiedZip: ZipCode): Promise<GetForecastResult> {
-	const { name, coordinates: { lat, long: lon }} = verifiedZip;
+	const { coordinates: { lat, long: lon }} = verifiedZip;
 	// Don't expose 3rd party API shape to rest of app, protects codebase from data changes in future
-	const result = parseForecastData(await getForecastByCoordinates({ lat, lon }));
-	// It seems that OpenWeather forecast uses a nearby city for the data, replace locationName with zip lookup instead for continuity
-	result.locationName = name;
-	return result;
+	const { locationName, calendarData, dailyForecast } = parseAndGroupForecastData(await getForecastByCoordinates({ lat, lon }));
+
+	return {
+		locationName,
+		dates: Array.from(calendarData.values()),
+		forecast: Array.from(dailyForecast.values())
+	};
 };
 
 async function getCoordinatesFromZip(zip: string): Promise<ZipGeocoderResponse> {
