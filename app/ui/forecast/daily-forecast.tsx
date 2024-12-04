@@ -39,13 +39,12 @@ type MainForecastDisplayProps = {
 	data: LocalForecastInfo;
 };
 
-// https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
 function MainForecastDisplay({ data }: MainForecastDisplayProps) {
 	const { timeOfForecast, temperature, weatherConditions: { iconSrc, description, wind }} = data;
 	
 	return (
 		<Grid container spacing={2}>
-			<Grid suppressHydrationWarning={true} display="flex" justifyContent="start" alignItems="center" size={3}>
+			<Grid display="flex" justifyContent="start" alignItems="center" size={3}>
 				{timeOfForecast}
 			</Grid>
 			<Grid display="flex" justifyContent="center" alignItems="center" size="grow">

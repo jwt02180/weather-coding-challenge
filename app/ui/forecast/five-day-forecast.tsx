@@ -57,9 +57,7 @@ function Forecast({ data }: ForecastProps) {
 			)}
 			{forecast.map((day, idx) => (
 				<TabContent key={idx} isSelected={selectedTab === idx}>
-					<div suppressHydrationWarning={true}>
-						<DailyForecast data={day} />
-					</div>
+					<DailyForecast data={day} />
 				</TabContent>
 			))}
 		</Box>
@@ -70,7 +68,6 @@ type TabLabelProps = {
 	date: ForecastDate;
 };
 
-// https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
 function TabLabel({ date }: TabLabelProps) {
 	const { label, tempMin, tempMax, disabled } = date;
 	const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -81,7 +78,7 @@ function TabLabel({ date }: TabLabelProps) {
 	
 	return (
 		<>
-			<Typography suppressHydrationWarning={true} variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
+			<Typography variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
 				{label}
 			</Typography>
 			<Typography
