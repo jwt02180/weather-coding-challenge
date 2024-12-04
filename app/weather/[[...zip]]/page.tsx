@@ -1,5 +1,7 @@
-import { getCoordinatesFromZip, getForecastByCoordinates } from '@/app/lib/weather-api';
-import { Card, CardContent, CardHeader } from '@mui/material';
+import { Card, CardContent, CardHeader, Typography } from '@mui/material';
+import { ForecastInfo } from '@/app/lib/app-definitions';
+import { getForecast, validateZip } from '@/app/lib/weather-api';
+import FiveDayForecast from '@/app/ui/forecast/five-day-forecast';
 
 type PageProps = {
 	params: Promise<{ zip?: string[] }>;
@@ -9,21 +11,34 @@ export default async function Page({ params }: PageProps) {
 	const { zip } = await params;
 	const zipCode = zip && zip[0];
 	
-	console.log(zipCode);
+	let zipName = '';
+    let validationMessage = 'Please enter a zip';
+    let forecastData: ForecastInfo[] = [];
 
-	if (zipCode) {
-		const { lat, lon } = await getCoordinatesFromZip(zipCode);
-		console.log(lat, lon);
+    if (zipCode) {
+      const { isValid, data: result, message } = await validateZip(zipCode);
+      if (message) {
+        validationMessage = message;
+      }
 
-		const result = await getForecastByCoordinates({ lat, lon });
-		console.log(result);
-	}
+      if (isValid && result) {
+        const { locationName, data } = await getForecast(result);
+        zipName = locationName;
+        forecastData = data;
+      }
+    }
 	
 	return (
 		<Card variant="outlined">
-			<CardHeader title="5-day Forecast" />
+			<CardHeader
+				title="5-day Forecast"
+				subheader={
+					<Typography color={zipName.length > 0 ? 'textSecondary' : 'warning'}>
+						{zipName || validationMessage}
+					</Typography>
+				} />
 			<CardContent>
-				<div>Forecast details here</div>
+				<FiveDayForecast data={forecastData} />
 			</CardContent>
 		</Card>
 	);
