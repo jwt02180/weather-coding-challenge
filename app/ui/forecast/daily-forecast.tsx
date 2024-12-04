@@ -14,7 +14,7 @@ export default function DailyForecast({ data }: DailyForecastProps) {
 	return (
 		<>
 			{data.map((forecast, idx) => (
-				<Accordion key={idx} expanded={expanded === idx} onChange={() => setExpanded(idx)}>
+				<Accordion suppressHydrationWarning key={idx} expanded={expanded === idx} onChange={() => setExpanded(idx)}>
 					<AccordionSummary color='primary' sx={{ '& .MuiAccordionSummary-content': { display: 'flex', alignItems: 'center', my: 0.25 }}}>
 						<Box sx={{ width: '100%' }}>
 							<MainForecastDisplay data={forecast} />
@@ -45,7 +45,7 @@ function MainForecastDisplay({ data }: MainForecastDisplayProps) {
 	
 	return (
 		<Grid container spacing={2}>
-			<Grid suppressHydrationWarning display="flex" justifyContent="start" alignItems="center" size={3}>
+			<Grid display="flex" justifyContent="start" alignItems="center" size={3}>
 				{timeOfForecast}
 			</Grid>
 			<Grid display="flex" justifyContent="center" alignItems="center" size="grow">
