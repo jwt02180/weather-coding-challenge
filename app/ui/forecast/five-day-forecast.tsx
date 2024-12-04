@@ -2,32 +2,17 @@
 
 import React, { useState } from 'react';
 import { Typography, Tabs, Tab, Box, useMediaQuery, TypographyProps } from '@mui/material';
-import { ForecastDate, ForecastInfo, LocalForecastInfo } from '@/app/lib/app-definitions';
+import { ForecastDate, ForecastInfo } from '@/app/lib/app-definitions';
 import DailyForecast from '@/app/ui/forecast/daily-forecast';
-import { getEmptyNext5Days, getForecastWithLocalDates } from '@/app/lib/weather-util';
 
-type FiveDayForecastProps = {
-	data : ForecastInfo[];
-};
-
-export default function FiveDayForecast({ data }: FiveDayForecastProps) {
-	// Convert Date objects from unix to local time
-	const { calendarData, dailyForecast } = getForecastWithLocalDates(data);
-	const dates = data.length === 0 ? getEmptyNext5Days() : calendarData;
-	const forecast = data.length === 0 ? [] : dailyForecast;
-	
-	return <Forecast data={{ dates, forecast }} />;
-};
-
-type ForecastProps = {
+export type FiveDayForecastProps = {
 	data: {
 		dates: ForecastDate[];
-		forecast: LocalForecastInfo[][];
+		forecast: ForecastInfo[][];
 	};
 };
 
-function Forecast({ data }: ForecastProps) {
-	const { dates, forecast } = data;
+export default function FiveDayForecast({ data: { dates, forecast } }: FiveDayForecastProps) {
 	const [selectedTab, setSelectedTab] = useState(0);
 	const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 	
@@ -37,17 +22,19 @@ function Forecast({ data }: ForecastProps) {
 	
 	return (
 		<Box sx={{ bgcolor: 'background.paper', display: isSmall ? 'block' : 'flex' }}>
-			<Tabs
-				value={selectedTab}
-				onChange={(_, next: number) => handleChange(next)}
-				variant={isSmall ? 'fullWidth' : 'standard'}
-				orientation={isSmall ? 'horizontal' : 'vertical'}
-				sx={isSmall ? {borderBottom: 1, borderColor: 'divider'} : {borderRight: 1, borderColor: 'divider'}}
-				>
-				{dates.map((date) => (
-					<Tab disabled={date.disabled} key={date.label} label={<TabLabel date={date} />} sx={{ minWidth: { xs: '36px', sm: '135px' } }} />
-				))}
-			</Tabs>
+			{dates.length > 0 && (
+				<Tabs
+					value={selectedTab}
+					onChange={(_, next: number) => handleChange(next)}
+					variant={isSmall ? 'fullWidth' : 'standard'}
+					orientation={isSmall ? 'horizontal' : 'vertical'}
+					sx={isSmall ? {borderBottom: 1, borderColor: 'divider'} : {borderRight: 1, borderColor: 'divider'}}
+					>
+					{dates.map((date) => (
+						<Tab disabled={date.disabled} key={date.label} label={<TabLabel date={date} />} sx={{ minWidth: { xs: '36px', sm: '135px' } }} />
+					))}
+				</Tabs>
+			)}
 			{forecast.length === 0 && (
 				<TabContent isSelected={true}>
 					<div style={{ height: '100%', width: '100%', textAlign: 'center' }}>
@@ -68,7 +55,6 @@ type TabLabelProps = {
 	date: ForecastDate;
 };
 
-// https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
 function TabLabel({ date }: TabLabelProps) {
 	const { label, tempMin, tempMax, disabled } = date;
 	const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -79,7 +65,7 @@ function TabLabel({ date }: TabLabelProps) {
 	
 	return (
 		<>
-			<Typography suppressHydrationWarning variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
+			<Typography variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
 				{label}
 			</Typography>
 			<Typography

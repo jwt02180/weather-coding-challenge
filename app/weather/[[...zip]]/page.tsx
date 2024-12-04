@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, Typography } from '@mui/material';
-import { ForecastInfo } from '@/app/lib/app-definitions';
 import { getForecast, validateZip } from '@/app/lib/weather-api';
-import FiveDayForecast from '@/app/ui/forecast/five-day-forecast';
+import FiveDayForecast, { FiveDayForecastProps } from '@/app/ui/forecast/five-day-forecast';
 
 type PageProps = {
 	params: Promise<{ zip?: string[] }>;
@@ -29,7 +28,10 @@ export default async function Page({ params }: PageProps) {
 	
 	let zipName = '';
 	let validationMessage = 'Please enter a zip';
-	let forecastData: ForecastInfo[] = [];
+	const forecastData: FiveDayForecastProps['data'] = {
+		dates: [],
+		forecast: []
+	};
 	
 	if (zipCode) {
 		const { isValid, data: result, message } = await validateZip(zipCode);
@@ -38,9 +40,10 @@ export default async function Page({ params }: PageProps) {
 		}
 		
 		if (isValid && result) {
-			const { locationName, data } = await getForecast(result);
+			const { locationName, dates, forecast } = await getForecast(result);
 			zipName = locationName;
-			forecastData = data;
+			forecastData.dates = dates;
+			forecastData.forecast = forecast;
 		}
 	}
 	

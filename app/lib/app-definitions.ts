@@ -11,12 +11,14 @@ export interface ValidateZipCodeResult {
 
 export interface GetForecastResult {
 	locationName: string;
-	data: ForecastInfo[];
+	dates: ForecastDate[];
+	forecast: ForecastInfo[][];
 };
 
-export interface LocalForecastData {
-	calendarData: ForecastDate[];
-	dailyForecast: LocalForecastInfo[][];
+export interface Forecast {
+	locationName: string;
+	calendarData: Map<number, ForecastDate>;
+	dailyForecast: Map<number, ForecastInfo[]>;
 };
 
 export interface ZipCode {
@@ -40,16 +42,14 @@ export interface ForecastDate {
 
 export interface ForecastInfo {
 	timestamp: number;
+	localDate: Date;
+	timeOfForecast: string;
 	temperature: number;
 	min: number;
 	max: number;
 	feelsLike: number;
 	humidity: number;
 	weatherConditions: WeatherCondition;
-};
-
-export interface LocalForecastInfo extends Omit<ForecastInfo, 'timestamp'> {
-	timeOfForecast: string;
 };
 
 export interface WeatherCondition {
