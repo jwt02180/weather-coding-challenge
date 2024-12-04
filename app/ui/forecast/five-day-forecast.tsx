@@ -38,7 +38,6 @@ function Forecast({ data }: ForecastProps) {
 	return (
 		<Box sx={{ bgcolor: 'background.paper', display: isSmall ? 'block' : 'flex' }}>
 			<Tabs
-				suppressHydrationWarning
 				value={selectedTab}
 				onChange={(_, next: number) => handleChange(next)}
 				variant={isSmall ? 'fullWidth' : 'standard'}
@@ -58,7 +57,7 @@ function Forecast({ data }: ForecastProps) {
 			)}
 			{forecast.map((day, idx) => (
 				<TabContent key={idx} isSelected={selectedTab === idx}>
-					<div suppressHydrationWarning>
+					<div suppressHydrationWarning={true}>
 						<DailyForecast data={day} />
 					</div>
 				</TabContent>
@@ -82,7 +81,7 @@ function TabLabel({ date }: TabLabelProps) {
 	
 	return (
 		<>
-			<Typography variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
+			<Typography suppressHydrationWarning={true} variant={isSmall ? 'subtitle2' : 'h6'} textTransform={'none'}>
 				{label}
 			</Typography>
 			<Typography
