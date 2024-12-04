@@ -12,9 +12,9 @@ export default function DailyForecast({ data }: DailyForecastProps) {
 	const [expanded, setExpanded] = useState<number>(0);
 	
 	return (
-		<>
+		<div suppressHydrationWarning>
 			{data.map((forecast, idx) => (
-				<Accordion suppressHydrationWarning key={idx} expanded={expanded === idx} onChange={() => setExpanded(idx)}>
+				<Accordion key={idx} expanded={expanded === idx} onChange={() => setExpanded(idx)}>
 					<AccordionSummary color='primary' sx={{ '& .MuiAccordionSummary-content': { display: 'flex', alignItems: 'center', my: 0.25 }}}>
 						<Box sx={{ width: '100%' }}>
 							<MainForecastDisplay data={forecast} />
@@ -31,7 +31,7 @@ export default function DailyForecast({ data }: DailyForecastProps) {
 					</AccordionDetails>
 				</Accordion>
 			))}
-		</>
+		</div>
 	);
 };
 
