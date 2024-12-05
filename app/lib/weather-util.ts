@@ -39,7 +39,7 @@ export function parseAndGroupForecastData(response: ForecastResponse): Forecast 
 			if (group === undefined) {
 					// Add entries for date on first ocurrance
 					result.calendarData.set(date, {
-							label: formatCalendarLabel(parsedEntry.localDate),
+							label: format(parsedEntry.localDate, 'E'),
 							tempMin: temp_min,
 							tempMax: temp_max
 					});
@@ -94,10 +94,6 @@ function parseForecastEntry(data: ForecastEntry, utcOffset: string): ForecastInf
 
 function generateWeatherIconUrl(icon: string): string {
 	return new URL(`${icon}@2x.png`, process.env.OPENWEATHER_ICON_BASE_URL).toString();
-};
-
-function formatCalendarLabel(date: Date): string {
-	return format(date, 'E');
 };
 
 // OpenWeather API only offers accumulation data in mm's regardless of "unit" type specified
